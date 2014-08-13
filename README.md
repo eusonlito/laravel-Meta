@@ -37,7 +37,7 @@ You can use this Facade anywhere in your application
 Publish the config file:
 
 ```
-php artisan config:publish laravel/packer
+php artisan config:publish laravel/meta
 ```
 
 #### app/controllers/index.php
