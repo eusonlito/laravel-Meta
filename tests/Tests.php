@@ -19,7 +19,7 @@ class Tests extends PHPUnit_Framework_TestCase
 
     protected static function text($length)
     {
-        $base = ' 0123456789 abcdefghi jklmnopqrs tuvwxyzA BCDEFGH IJKLMNOPQ RSTUVWXYZ ';
+        $base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $text = '';
 
         while (strlen($text) < $length) {
@@ -33,11 +33,11 @@ class Tests extends PHPUnit_Framework_TestCase
     {
         $response = $this->Meta->meta('title', $text = self::text(50));
 
-        $this->assertEqual($text, $response);
+        $this->assertTrue($text === $response);
 
         $response = $this->Meta->meta('title', $text = self::text(80));
 
-        $this->assertNotEqual($text, $response);
+        $this->assertNotTrue($text, $response);
         $this->assertTrue(strlen($response) === 70);
     }
 
@@ -45,11 +45,11 @@ class Tests extends PHPUnit_Framework_TestCase
     {
         $response = $this->Meta->meta('description', $text = self::text(50));
 
-        $this->assertEqual($title, $response);
+        $this->assertTrue($text === $response);
 
         $response = $this->Meta->meta('description', $text = self::text(250));
 
-        $this->assertNotEqual($text, $response);
+        $this->assertNotTrue($text === $response);
         $this->assertTrue(strlen($response) === 200);
     }
 
@@ -57,34 +57,75 @@ class Tests extends PHPUnit_Framework_TestCase
     {
         $response = $this->Meta->title(self::$title);
 
-        $this->assertEqual(' - '.self::$title, $response);
+        $this->assertTrue(' - '.self::$title === $response);
 
         $response = $this->Meta->meta('title', $text = self::text(30));
 
-        $this->assertEqual($text.' - '.self::$title, $response);
+        $this->assertTrue($text.' - '.self::$title === $response);
 
         $response = $this->Meta->meta('title', $text = self::text(80));
 
-        $this->assertNotEqual($text.' - '.self::$title, $response);
-        $this->asserTrue(strlen($response) === 70);
+        $this->assertNotTrue($text.' - '.self::$title === $response);
+        $this->assertTrue(strlen($response) === 70);
     }
 
     public function testMetaImage()
     {
         $response = $this->Meta->meta('image', $text = self::text(30));
 
-        $this->assertTrue(is_array($response));
-        $this->assertTrue(count($response) === 1);
-        $this->assertEqual($text, $response[0]);
+        $this->assertTrue($text === $response);
 
-        for ($i = 0; $i < 10; $i++) {
-            $response = $this->Meta->meta('image', self::text(80));
+        $response = $this->Meta->meta('image', $text = self::text(150));
 
-            if ($i > 3) {
+        $this->assertTrue($text === $response);
+
+        for ($i = 0; $i < 5; $i++) {
+            $response = $this->Meta->meta('image', $text =self::text(80));
+
+            if ($i > 2) {
                 $this->assertTrue($response === null);
+            } else {
+                $this->assertTrue($text === $response);
             }
         }
 
-        $this->assertTrue(count($response) === 5);
+        $this->assertTrue(count($this->Meta->meta('image')) === 5);
+    }
+
+    public function testTagTitle()
+    {
+        $this->Meta->title(self::$title);
+        $this->Meta->meta('title', $text = self::text(20));
+
+        $tag = $this->Meta->tag('title');
+
+        $this->assertTrue(substr_count($tag, '<meta') === 2);
+        $this->assertTrue(substr_count($tag, 'title"') === 2);
+        $this->assertTrue(strstr($tag, self::$title) ? true : false);
+        $this->assertTrue(strstr($tag, $text) ? true : false);
+    }
+
+    public function testTagDescription()
+    {
+        $this->Meta->meta('description', $text = self::text(150));
+
+        $tag = $this->Meta->tag('description');
+
+        $this->assertTrue(substr_count($tag, '<meta') === 2);
+        $this->assertTrue(substr_count($tag, 'description"') === 2);
+        $this->assertTrue(strstr($tag, $text) ? true : false);
+    }
+
+    public function testTagImage()
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $this->Meta->meta('image', self::text(80));
+        }
+
+        $tag = $this->Meta->tag('image');
+
+        $this->assertTrue(substr_count($tag, '<meta') === 10);
+        $this->assertTrue(substr_count($tag, '<link') === 5);
+        $this->assertTrue(substr_count($tag, 'image') === 15);
     }
 }

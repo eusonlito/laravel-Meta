@@ -49,7 +49,7 @@ class Meta
             return $this->title;
         }
 
-        return $this->title = ' - '.$title;
+        return $this->title = ' - '.$this->fix($title);
     }
 
     /**
@@ -76,12 +76,6 @@ class Meta
             return null;
         }
 
-        $method = 'get'.$key;
-
-        if (method_exists($this, $method)) {
-            return $this->$method();
-        }
-
         return $this->metas[$key];
     }
 
@@ -92,9 +86,7 @@ class Meta
      */
     public function set($key, $value = null)
     {
-        $value = preg_replace('#<[^>]+>#', ' ', $value);
-        $value = preg_replace('/[\r\n\s]+/', ' ', $value);
-        $value = trim(str_replace('"', '&quot;', $value));
+        $value = $this->fix($value);
 
         $method = 'set'.$key;
 
@@ -111,8 +103,8 @@ class Meta
      */
     private function setTitle($value)
     {
-        if ($this->title && $this->settings['limit_title']) {
-            $limit = $this->settings['limit_title'] - strlen($this->title);
+        if ($this->title && $this->config['title_limit']) {
+            $limit = $this->config['title_limit'] - strlen($this->title);
         } else {
             $limit = 'title';
         }
@@ -122,17 +114,17 @@ class Meta
 
     /**
      * @param  string $value
-     * @return array
+     * @return string
      */
     private function setImage($value)
     {
         if (!isset($this->metas['image'])) {
             $this->metas['image'] = [];
-        } elseif ($this->settings['image_limit'] > count($this->metas['image'])) {
+        } elseif (count($this->metas['image']) >= $this->config['image_limit']) {
             return;
         }
 
-        return $this->metas['image'][] = asset($value);
+        return $this->metas['image'][] = $value;
     }
 
     /**
@@ -183,79 +175,43 @@ class Meta
 
     /**
      * @param  string $text
+     * @return string
+     */
+    private function fix($text)
+    {
+        $text = preg_replace('/<[^>]+>/', ' ', $text);
+        $text = preg_replace('/[\r\n\s]+/', ' ', $text);
+
+        return trim(str_replace('"', '&quot;', $text));
+    }
+
+    /**
+     * @param  string $text
      * @param  string $key
      * @return string
      */
-    private static function cut($text, $key)
+    private function cut($text, $key)
     {
-        if (is_string($key) && isset($this->settings[$key.'_limit'])) {
-            $limit = $this->settings[$key.'_limit'];
+        if (is_string($key) && isset($this->config[$key.'_limit'])) {
+            $limit = $this->config[$key.'_limit'];
         } elseif (is_integer($key)) {
             $limit = $key;
         } else {
             return $text;
         }
 
-        if (strlen($text) <= (int)$limit) {
-            return $text;
-        }
-
         $length = strlen($text);
-        $num = 0;
-        $tag = 0;
 
-        for ($n = 0; $n < $length; $n++) {
-            if ($text[$n] === '<') {
-                $tag++;
-                continue;
-            }
-
-            if ($text[$n] === '>') {
-                $tag--;
-                continue;
-            }
-
-            if ($tag !== 0) {
-                continue;
-            }
-
-            $num++;
-
-            if ($num < $limit) {
-                continue;
-            }
-
-            $text = substr($text, 0, $n);
-
-            if ($space = strrpos($text, ' ')) {
-                $text = substr($text, 0, $space);
-            }
-
-            break;
-        }
-
-        if (strlen($text) === $length) {
+        if ($length <= (int)$limit) {
             return $text;
         }
 
-        $text .= $end;
+        $text = substr($text, 0, ($limit -= 3));
 
-        if (!preg_match_all('|(<([\w]+)[^>]*>)|', $text, $aBuffer) || empty($aBuffer[1])) {
-            return $text;
+        if ($space = strrpos($text, ' ')) {
+            $text = substr($text, 0, $space);
         }
 
-        preg_match_all('|</([a-zA-Z]+)>|', $text, $aBuffer2);
-
-        if (count($aBuffer[2]) === count($aBuffer2[1])) {
-            return $text;
-        }
-
-        foreach ($aBuffer[2] as $k => $tag) {
-            if (empty($aBuffer2[1][$k]) || ($tag !== $aBuffer2[1][$k])) {
-                $text .= '</'.$tag.'>';
-            }
-        }
-
-        return $text;
+        return $text.'...';
     }
 }
