@@ -1,0 +1,24 @@
+{
+    "name": "laravel/meta",
+    "keywords": ["meta", "tags", "head", "laravel"],
+    "description": "A package to manage Header Meta Tags",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lito",
+            "email": "lito@eordes.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravel\\Meta\\": "src/Laravel/Meta/"
+        }
+    },
+    "minimum-stability": "stable"
+}
