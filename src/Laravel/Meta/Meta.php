@@ -202,7 +202,7 @@ class Meta
 
         $length = strlen($text);
 
-        if ($length <= (int)$limit) {
+        if ($length <= (int) $limit) {
             return $text;
         }
 
