@@ -40,7 +40,7 @@ Publish the config file:
 php artisan config:publish laravel/meta
 ```
 
-#### app/controllers/index.php
+#### app/controllers/homeController.php
 
 ```php
 class Home extends Controller {
