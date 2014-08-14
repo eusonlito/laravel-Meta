@@ -49,7 +49,7 @@ class Meta
             return $this->title;
         }
 
-        return $this->title = ' - '.$this->fix($title);
+        return $this->title = $this->fix($title);
     }
 
     /**
@@ -103,13 +103,16 @@ class Meta
      */
     private function setTitle($value)
     {
-        if ($this->title && $this->config['title_limit']) {
-            $limit = $this->config['title_limit'] - strlen($this->title);
+        $title = $this->title;
+
+        if ($title && $this->config['title_limit']) {
+            $title = ' - '.$title;
+            $limit = $this->config['title_limit'] - strlen($title);
         } else {
             $limit = 'title';
         }
 
-        return $this->metas['title'] = self::cut($value, $limit).$this->title;
+        return $this->metas['title'] = self::cut($value, $limit).$title;
     }
 
     /**
@@ -202,7 +205,7 @@ class Meta
 
         $length = strlen($text);
 
-        if ($length <= (int) $limit) {
+        if ($length <= (int)$limit) {
             return $text;
         }
 

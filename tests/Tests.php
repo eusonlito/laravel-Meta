@@ -57,7 +57,7 @@ class Tests extends PHPUnit_Framework_TestCase
     {
         $response = $this->Meta->title(self::$title);
 
-        $this->assertTrue(' - '.self::$title === $response);
+        $this->assertTrue(self::$title === $response);
 
         $response = $this->Meta->meta('title', $text = self::text(30));
 
