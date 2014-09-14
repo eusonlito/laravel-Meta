@@ -1,5 +1,4 @@
-<?php
-namespace Laravel\Meta\Facades;
+<?php namespace Laravel\Meta\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -12,6 +11,6 @@ class Meta extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'Meta';
+        return 'meta';
     }
 }

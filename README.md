@@ -1,4 +1,4 @@
-# Laravel Meta
+# Laravel >= 4.3 Meta
 
 [![Build Status](https://travis-ci.org/eusonlito/laravel-Meta.svg?branch=master)](https://travis-ci.org/eusonlito/laravel-Meta)
 [![Latest Stable Version](https://poser.pugx.org/laravel/meta/v/stable.png)](https://packagist.org/packages/laravel/meta)
@@ -6,6 +6,8 @@
 [![License](https://poser.pugx.org/laravel/meta/license.png)](https://packagist.org/packages/laravel/meta)
 
 With this package you can manage header Meta Tags from Laravel controllers.
+
+If you want a Laravel <= 4.2 compatible version, please use `v4.2` branch.
 
 ## Installation
 
@@ -23,16 +25,20 @@ Begin by installing this package through Composer.
 
 ```php
 
-// app/config/app.php
+// config/app.php
 
 'providers' => [
     '...',
     'Laravel\Meta\MetaServiceProvider',
 ];
+
+'aliases' => [
+    '...',
+    'Meta'    => 'Laravel\Meta\Facades\Meta',
+];
 ```
 
-When you've added the ```MetaServiceProvider``` an extra ```Meta``` facade is available.
-You can use this Facade anywhere in your application
+Now you have a ```Meta``` facade available.
 
 Publish the config file:
 
@@ -40,7 +46,7 @@ Publish the config file:
 php artisan config:publish laravel/meta
 ```
 
-#### app/controllers/homeController.php
+#### app/Http/Controllers/homeController.php
 
 ```php
 class Home extends Controller {
@@ -59,7 +65,7 @@ class Home extends Controller {
 }
 ```
 
-#### app/views/html.php
+#### resources/views/html.php
 
 ```php
 <html>

@@ -1,48 +1,44 @@
-<?php
-namespace Laravel\Meta;
+<?php namespace Laravel\Meta;
 
 use Config;
-
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class MetaServiceProvider extends ServiceProvider
 {
     /**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-    protected $defer = false;
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
 
     /**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this->package('laravel/meta');
-        AliasLoader::getInstance()->alias('Meta', 'Laravel\Meta\Facades\Meta');
     }
 
     /**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
+     * Register the service provider.
+     *
+     * @return void
+     */
     public function register()
     {
-        $this->app['Meta'] = $this->app->share(function () {
+        $this->app->bindShared('meta', function () {
             return new Meta($this->config());
         });
     }
 
     /**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
     public function provides()
     {
         return ['meta'];
@@ -55,6 +51,8 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function config()
     {
-        return Config::get('meta::config');
+        Config::get('meta::config');
+
+        return Config::getItems()['meta::config'];
     }
 }
