@@ -16,7 +16,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "laravel/meta": "v4.2"
+        "laravel/meta": "4.2.x-dev"
     }
 }
 ```
