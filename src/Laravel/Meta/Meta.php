@@ -36,6 +36,10 @@ class Meta
             $config['image_limit'] = 5;
         }
 
+        if (isset($config['robots_default'])) {
+            $this->set('robots', $config['robots_default']);
+        }
+
         $this->config = $config;
     }
 
@@ -113,6 +117,16 @@ class Meta
         }
 
         return $this->metas['title'] = self::cut($value, $limit).$title;
+    }
+
+    /**
+     * @return string
+     */
+    private function tagRobots()
+    {
+        return '<meta name="robots" content="'
+            . $this->metas['robots']
+            . '" />';
     }
 
     /**
