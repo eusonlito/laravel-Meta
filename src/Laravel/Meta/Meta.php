@@ -49,6 +49,10 @@ class Meta
             return $this->title;
         }
 
+        $this->title = null;
+
+        $this->set('title', $title);
+
         return $this->title = $this->fix($title);
     }
 
