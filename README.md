@@ -66,7 +66,7 @@ class Home extends Controller {
         Meta::meta('description', 'This is my home. Enjoy!');
         Meta::meta('image', asset('images/home-logo.png'));
 
-        return View::make('html')->nest('body', 'index');
+        return view('index');
     }
 
     public function detail()
@@ -76,13 +76,15 @@ class Home extends Controller {
         Meta::meta('description', 'All about this detail page');
         Meta::meta('image', asset('images/detail-logo.png'));
 
-        return View::make('html')->nest('body', 'detail');
+        return view('detail');
     }
 
     public function private()
     {
         # Custom robots for this section
         Meta::meta('robots', 'noindex,nofollow');
+
+        return view('private');
     }
 }
 ```
