@@ -136,48 +136,89 @@ class Meta
 
     /**
      * @param  string $key
+     * @param  string $value
      * @return string
      */
-    public function tag($key)
+    public function tag($key, $value = null)
     {
-        if (empty($this->metas[$key])) {
+        if (($value === null) && empty($this->metas[$key])) {
             return '';
         }
 
-        $method = 'tag'.$key;
+        $method = 'tag'.ucfirst($key);
 
         if (method_exists($this, $method)) {
-            return $this->$method();
+            return $this->$method($value);
         }
 
-        return $this->tagDefault($key);
+        return $this->tagDefault($key, $value);
     }
 
     /**
      * @param  string $key
+     * @param  string $value
      * @return string
      */
-    private function tagDefault($key)
+    private function tagDefault($key, $value = null)
     {
-        return '<meta name="'.$key.'" content="'.$this->metas[$key].'" />'
-            .'<meta property="og:'.$key.'" content="'.$this->metas[$key].'" />';
+        return $this->tagMetaName($key, $value)
+            .$this->tagMetaProperty($key, $value);
     }
 
     /**
      * @param  string $key
+     * @param  mixed $images
      * @return string
      */
-    private function tagImage()
+    public function tagImage($images = null)
     {
         $html = '';
 
-        foreach ($this->metas['image'] as $image) {
-            $html .= '<meta name="image" content="'.$image.'" />'
-                .'<meta property="og:image" content="'.$image.'" />'
+        foreach ((array)($images ?: $this->metas['image']) as $image) {
+            $html .= $this->tagDefault('image', $image)
                 .'<link rel="image_src" href="'.$image.'" />';
         }
 
         return $html;
+    }
+
+    /**
+     * @param  string $key
+     * @param  string $value
+     * @return string
+     */
+    public function tagMetaName($key, $value = null)
+    {
+        return $this->tagString('name', $key, $value);
+    }
+
+    /**
+     * @param  string $key
+     * @param  string $value
+     * @return string
+     */
+    public function tagMetaProperty($key, $value = null)
+    {
+        if (strpos($key, 'og:') !== 0) {
+            $key = 'og:'.$key;
+        }
+
+        if ($value === null) {
+            $value = $this->metas[str_replace('og:', '', $key)];
+        }
+
+        return $this->tagString('property', $key, $value);
+    }
+
+    /**
+     * @param  string $name
+     * @param  string $key
+     * @param  string $value
+     * @return string
+     */
+    private function tagString($name, $key, $value = null)
+    {
+        return '<meta '.$name.'="'.$key.'" content="'.($value ?: $this->metas[$key]).'" />';
     }
 
     /**

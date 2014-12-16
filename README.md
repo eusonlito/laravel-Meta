@@ -46,17 +46,39 @@ php artisan config:publish laravel/meta
 
 ```php
 class Home extends Controller {
-    public function index()
+    public function __construct()
     {
+        # Default title
         Meta::title('This is default page title to complete section title');
 
+        # Default robots
+        Meta::meta('robots', 'index,follow');
+    }
+
+    public function index()
+    {
+        # Section description
         Meta::meta('title', 'You are at home');
         Meta::meta('description', 'This is my home. Enjoy!');
-        Meta::meta('image', 'images/facebook.php');
-        Meta::meta('image', 'images/twitter.php');
-        Meta::meta('image', 'images/linkedin.php');
+        Meta::meta('image', asset('images/home-logo.png'));
 
         return View::make('html')->nest('body', 'index');
+    }
+
+    public function detail()
+    {
+        # Section description
+        Meta::meta('title', 'This is a detail page');
+        Meta::meta('description', 'All about this detail page');
+        Meta::meta('image', asset('images/detail-logo.png'));
+
+        return View::make('html')->nest('body', 'detail');
+    }
+
+    public function private()
+    {
+        # Custom robots for this section
+        Meta::meta('robots', 'noindex,nofollow');
     }
 }
 ```
@@ -74,16 +96,22 @@ class Home extends Controller {
 
         <title><?= Meta::meta('title'); ?></title>
 
-        <meta property="og:site_name" content="My site" />
-        <meta property="og:url" content="<?= Request::url(); ?>" />
-        <meta property="og:locale" content="en_EN" />
+        <?= Meta::tagMetaName('robots'); ?>
+
+        <?= Meta::tagMetaProperty('site_name', 'My site'); ?>
+        <?= Meta::tagMetaProperty('url', Request::url()); ?>
+        <?= Meta::tagMetaProperty('locale', 'en_EN'); ?>
 
         <?= Meta::tag('title'); ?>
         <?= Meta::tag('description'); ?>
         <?= Meta::tag('image'); ?>
+
+        # Set default share picture after custom section pictures
+        <?= Meta::tag('image', asset('images/default-logo.png')); ?>
     </head>
 
     <body>
         ...
     </body>
 </html>
+```
