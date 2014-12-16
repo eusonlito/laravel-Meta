@@ -122,3 +122,86 @@ class Home extends Controller {
     </body>
 </html>
 ```
+
+### Config
+
+```php
+return array(
+
+    /*
+    |--------------------------------------------------------------------------
+    | Limit title meta tag length
+    |--------------------------------------------------------------------------
+    |
+    | To best SEO implementation, limit tags.
+    |
+    */
+
+    'title_limit' => 70,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Limit description meta tag length
+    |--------------------------------------------------------------------------
+    |
+    | To best SEO implementation, limit tags.
+    |
+    */
+
+    'description_limit' => 200,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Limit image meta tag quantity
+    |--------------------------------------------------------------------------
+    |
+    | To best SEO implementation, limit tags.
+    |
+    */
+
+    'image_limit' => 5
+);
+```
+
+### Using Meta outside Laravel
+
+#### Controller
+
+```php
+require (__DIR__.'/vendor/autoload.php');
+
+// Check default settings
+$config = require (__DIR__.'/src/config/config.php');
+
+$Meta = new Laravel\Meta\Meta($config);
+
+# Default title
+$Meta->title('This is default page title to complete section title');
+
+# Default robots
+$Meta->meta('robots', 'index,follow');
+
+# Section description
+$Meta->meta('title', 'This is a detail page');
+$Meta->meta('description', 'All about this detail page');
+$Meta->meta('image', '/images/detail-logo.png');
+```
+
+#### Template
+
+```php
+<title><?= $Meta->meta('title'); ?></title>
+
+<?= $Meta->tagMetaName('robots'); ?>
+
+<?= $Meta->tagMetaProperty('site_name', 'My site'); ?>
+<?= $Meta->tagMetaProperty('url', getenv('REQUEST_URI')); ?>
+<?= $Meta->tagMetaProperty('locale', 'en_EN'); ?>
+
+<?= $Meta->tag('title'); ?>
+<?= $Meta->tag('description'); ?>
+<?= $Meta->tag('image'); ?>
+
+# Set default share picture after custom section pictures
+<?= $Meta->tag('image', '/images/default-logo.png'); ?>
+```
