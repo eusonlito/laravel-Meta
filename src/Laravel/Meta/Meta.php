@@ -144,7 +144,7 @@ class Meta
             return '';
         }
 
-        $method = 'tag'.$key;
+        $method = 'tag'.ucfirst($key);
 
         if (method_exists($this, $method)) {
             return $this->$method();
@@ -155,12 +155,13 @@ class Meta
 
     /**
      * @param  string $key
+     * @param  string $value
      * @return string
      */
-    private function tagDefault($key)
+    private function tagDefault($key, $value = null)
     {
-        return '<meta name="'.$key.'" content="'.$this->metas[$key].'" />'
-            .'<meta property="og:'.$key.'" content="'.$this->metas[$key].'" />';
+        return $this->tagMetaName($key, $value)
+            .$this->tagMetaProperty($key, $value);
     }
 
     /**
@@ -172,12 +173,52 @@ class Meta
         $html = '';
 
         foreach ($this->metas['image'] as $image) {
-            $html .= '<meta name="image" content="'.$image.'" />'
-                .'<meta property="og:image" content="'.$image.'" />'
+            $html .= $this->tagDefault($key, $image)
                 .'<link rel="image_src" href="'.$image.'" />';
         }
 
         return $html;
+    }
+
+    /**
+     * @param  string $key
+     * @param  string $value
+     * @return string
+     */
+    private function tagMetaName($key, $value = null)
+    {
+        return $this->tagString('name', $key, $value);
+    }
+
+    /**
+     * @param  string $key
+     * @param  string $value
+     * @return string
+     */
+    private function tagMetaProperty($key, $value = null)
+    {
+        if (strpos($key, 'og:') !== 0) {
+            $key = 'og:'.$key;
+        }
+
+        return $this->tagString('property', $key, $value);
+    }
+
+    /**
+     * @param  string $name
+     * @param  string $key
+     * @param  string $value
+     * @return string
+     */
+    private function tagString($name, $key, $value = null)
+    {
+        if (($value === null) && (strpos($key, 'og:') === 0)) {
+            $value = $this->metas[str_replace('og:', '', $key)];
+        } else {
+            $value = $this->metas[$key];
+        }
+
+        return '<meta '.$name.'="'.$key.'" content="'.$value.'" />';
     }
 
     /**
