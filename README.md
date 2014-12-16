@@ -79,6 +79,8 @@ class Home extends Controller {
     {
         # Custom robots for this section
         Meta::meta('robots', 'noindex,nofollow');
+
+        return View::make('html')->nest('body', 'private');
     }
 }
 ```
