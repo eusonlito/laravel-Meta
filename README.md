@@ -77,6 +77,11 @@ class Home extends Controller {
 
     public function private()
     {
+        # Section description
+        Meta::meta('title', 'Private Area');
+        Meta::meta('description', 'You shall not pass!');
+        Meta::meta('image', asset('images/locked-logo.png'));
+
         # Custom robots for this section
         Meta::meta('robots', 'noindex,nofollow');
 
