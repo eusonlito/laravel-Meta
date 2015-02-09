@@ -19,7 +19,9 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('laravel/meta');
+        $this->publishes([
+            __DIR__.'/../../config/config.php' => config_path('meta.php'),
+        ], 'config');
     }
 
     /**
@@ -29,7 +31,7 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bindShared('meta', function () {
+        $this->app['mutlucell'] = $this->app->share(function($app) {
             return new Meta($this->config());
         });
     }
