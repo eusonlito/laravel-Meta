@@ -1,4 +1,4 @@
-<?php namespace Laravel\Meta\Facades;
+<?php namespace Laravel\Meta;
 
 use Illuminate\Support\Facades\Facade;
 
