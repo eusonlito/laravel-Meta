@@ -34,7 +34,7 @@ Begin by installing this package through Composer.
 
 'aliases' => [
     '...',
-    'Meta'    => 'Laravel\Meta\Facades\Meta',
+    'Meta'    => 'Laravel\Meta\Facade',
 ];
 ```
 
@@ -43,7 +43,7 @@ Now you have a ```Meta``` facade available.
 Publish the config file:
 
 ```
-php artisan config:publish laravel/meta
+php artisan vendor:publish
 ```
 
 #### app/Http/Controllers/homeController.php

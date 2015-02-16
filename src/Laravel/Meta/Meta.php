@@ -1,5 +1,4 @@
-<?php
-namespace Laravel\Meta;
+<?php namespace Laravel\Meta;
 
 class Meta
 {

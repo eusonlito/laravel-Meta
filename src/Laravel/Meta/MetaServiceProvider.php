@@ -1,9 +1,8 @@
 <?php namespace Laravel\Meta;
 
 use Config;
-use Illuminate\Support\ServiceProvider;
 
-class MetaServiceProvider extends ServiceProvider
+class MetaServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -20,8 +19,8 @@ class MetaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../../config/config.php' => config_path('meta.php'),
-        ], 'config');
+            __DIR__.'/../../config/config.php' => config_path('meta.php')
+        ]);
     }
 
     /**
@@ -31,8 +30,8 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['mutlucell'] = $this->app->share(function($app) {
-            return new Meta($this->config());
+        $this->app['meta'] = $this->app->share(function($app) {
+            return new Meta(Config::get('meta'));
         });
     }
 
@@ -44,17 +43,5 @@ class MetaServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['meta'];
-    }
-
-    /**
-     * Get the base settings from config file
-     *
-     * @return array
-     */
-    public function config()
-    {
-        Config::get('meta::config');
-
-        return Config::getItems()['meta::config'];
     }
 }

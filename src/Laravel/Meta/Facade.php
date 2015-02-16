@@ -1,8 +1,6 @@
 <?php namespace Laravel\Meta;
 
-use Illuminate\Support\Facades\Facade;
-
-class Meta extends Facade
+class Facade extends \Illuminate\Support\Facades\Facade
 {
     /**
      * Name of the binding in the IoC container
