@@ -1,4 +1,4 @@
-# Laravel >= 4.3 Meta
+# Laravel 5 Meta
 
 [![Build Status](https://travis-ci.org/eusonlito/laravel-Meta.svg?branch=master)](https://travis-ci.org/eusonlito/laravel-Meta)
 [![Latest Stable Version](https://poser.pugx.org/laravel/meta/v/stable.png)](https://packagist.org/packages/laravel/meta)
