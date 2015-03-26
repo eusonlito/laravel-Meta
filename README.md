@@ -46,14 +46,20 @@ Publish the config file:
 php artisan vendor:publish
 ```
 
-#### app/Http/Controllers/homeController.php
+#### app/Http/Controllers/Controller.php
 
 ```php
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Bus\DispatchesCommands;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+
 use Meta;
 
-class Home extends Controller {
+abstract class Controller extends BaseController {
+    use DispatchesCommands, ValidatesRequests;
+
     public function __construct()
     {
         # Default title
@@ -62,7 +68,17 @@ class Home extends Controller {
         # Default robots
         Meta::meta('robots', 'index,follow');
     }
+}
+```
 
+#### app/Http/Controllers/HomeController.php
+
+```php
+<?php namespace App\Http\Controllers;
+
+use Meta;
+
+class HomeController extends Controller {
     public function index()
     {
         # Section description
