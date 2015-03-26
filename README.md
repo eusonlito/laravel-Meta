@@ -49,6 +49,10 @@ php artisan vendor:publish
 #### app/Http/Controllers/homeController.php
 
 ```php
+<?php namespace App\Http\Controllers;
+
+use Meta;
+
 class Home extends Controller {
     public function __construct()
     {
