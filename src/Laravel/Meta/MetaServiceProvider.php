@@ -1,6 +1,5 @@
-<?php namespace Laravel\Meta;
-
-use Config;
+<?php
+namespace Eusonlito\LaravelMeta;
 
 class MetaServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -31,7 +30,7 @@ class MetaServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->app['meta'] = $this->app->share(function($app) {
-            return new Meta(Config::get('meta'));
+            return new Meta(config('meta'));
         });
     }
 

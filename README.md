@@ -16,7 +16,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "laravel/meta": "master-dev"
+        "eusonlito/laravel-meta": "master-dev"
     }
 }
 ```
@@ -29,12 +29,12 @@ Begin by installing this package through Composer.
 
 'providers' => [
     '...',
-    'Laravel\Meta\MetaServiceProvider',
+    'Eusonlito\LaravelMeta\MetaServiceProvider',
 ];
 
 'aliases' => [
     '...',
-    'Meta'    => 'Laravel\Meta\Facade',
+    'Meta'    => 'Eusonlito\LaravelMeta\Facade',
 ];
 ```
 
@@ -197,7 +197,7 @@ require (__DIR__.'/vendor/autoload.php');
 // Check default settings
 $config = require (__DIR__.'/src/config/config.php');
 
-$Meta = new Laravel\Meta\Meta($config);
+$Meta = new Eusonlito\LaravelMeta\Meta($config);
 
 # Default title
 $Meta->title('This is default page title to complete section title');

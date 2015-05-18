@@ -1,4 +1,5 @@
-<?php namespace Laravel\Meta;
+<?php
+namespace Eusonlito\LaravelMeta;
 
 class Meta
 {

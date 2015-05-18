@@ -1,5 +1,5 @@
 <?php
-use Laravel\Meta\Meta;
+use Eusonlito\LaravelMeta\Meta;
 
 class Tests extends PHPUnit_Framework_TestCase
 {

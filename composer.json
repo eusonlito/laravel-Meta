@@ -1,5 +1,5 @@
 {
-    "name": "laravel/meta",
+    "name": "eusonlito/laravel-meta",
     "keywords": ["meta", "tags", "head", "laravel"],
     "description": "A package to manage Header Meta Tags",
     "license": "MIT",
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Laravel\\Meta\\": "src/Laravel/Meta/"
+            "Eusonlito\\LaravelMeta\\": "src/Eusonlito/LaravelMeta/"
         }
     },
     "minimum-stability": "stable"
