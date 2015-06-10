@@ -1,7 +1,9 @@
 <?php
 namespace Eusonlito\LaravelMeta;
 
-class MetaServiceProvider extends \Illuminate\Support\ServiceProvider
+use Illuminate\Support\ServiceProvider;
+
+class MetaServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -29,7 +31,7 @@ class MetaServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $this->app['meta'] = $this->app->share(function($app) {
+        $this->app->singleton('Meta', function($app) {
             return new Meta(config('meta'));
         });
     }
