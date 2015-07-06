@@ -19,6 +19,19 @@ class Meta
     private $title;
 
     /**
+     * @var array
+     */
+    private $og = [
+        'title', 'type', 'image', 'url', 'audio', 'description',
+        'determiner', 'locale', 'site_name', 'video'
+    ];
+
+    /**
+     * @var array
+     */
+    private $processed = [];
+
+    /**
      * @param  array $config
      * @return this
      */
@@ -127,11 +140,9 @@ class Meta
     {
         if (!isset($this->metas['image'])) {
             $this->metas['image'] = [];
-        } elseif (count($this->metas['image']) >= $this->config['image_limit']) {
-            return;
+        } elseif (count($this->metas['image']) < $this->config['image_limit']) {
+            return $this->metas['image'][] = $value;
         }
-
-        return $this->metas['image'][] = $value;
     }
 
     /**
@@ -141,9 +152,7 @@ class Meta
      */
     public function tag($key, $value = null)
     {
-        if (($value === null) && empty($this->metas[$key])) {
-            return '';
-        }
+        $this->processed = [];
 
         $method = 'tag'.ucfirst($key);
 
@@ -161,8 +170,7 @@ class Meta
      */
     private function tagDefault($key, $value = null)
     {
-        return $this->tagMetaName($key, $value)
-            .$this->tagMetaProperty($key, $value);
+        return $this->tagMetaName($key, $value).$this->tagMetaProperty($key, $value);
     }
 
     /**
@@ -172,11 +180,16 @@ class Meta
      */
     public function tagImage($images = null)
     {
+        if (empty($images) && !array_key_exists('image', $this->metas)) {
+            return '';
+        }
+
         $html = '';
 
         foreach ((array)($images ?: $this->metas['image']) as $image) {
-            $html .= $this->tagDefault('image', $image)
-                .'<link rel="image_src" href="'.$image.'" />';
+            if ($tag = $this->tagDefault('image', $image)) {
+                $html .= $tag.'<link rel="image_src" href="'.$image.'" />';
+            }
         }
 
         return $html;
@@ -199,14 +212,6 @@ class Meta
      */
     public function tagMetaProperty($key, $value = null)
     {
-        if (strpos($key, 'og:') !== 0) {
-            $key = 'og:'.$key;
-        }
-
-        if ($value === null) {
-            $value = $this->metas[str_replace('og:', '', $key)];
-        }
-
         return $this->tagString('property', $key, $value);
     }
 
@@ -218,7 +223,32 @@ class Meta
      */
     private function tagString($name, $key, $value = null)
     {
-        return '<meta '.$name.'="'.$key.'" content="'.($value ?: $this->metas[$key]).'" />';
+        if (!$this->isVisible($name, $key, $value)) {
+            return '';
+        }
+
+        $value = $value ?: $this->metas[$key];
+        $tag = '<meta '.$name.'="'.$key.'" content="'.$value.'" />';
+
+        if ((strpos($key, 'og:') !== 0) && in_array($key, $this->og, true)) {
+            $tag .= $this->tagString('property', 'og:'.$key, $value);
+        }
+
+        $this->processed[$name.$key] = true;
+
+        return $tag;
+    }
+
+    /**
+     * @param  string $name
+     * @param  string $key
+     * @param  string $value
+     * @return boolean
+     */
+    private function isVisible($name, $key, $value)
+    {
+        return (!array_key_exists($name.$key, $this->processed)
+            && ($value || array_key_exists($key, $this->metas)));
     }
 
     /**
