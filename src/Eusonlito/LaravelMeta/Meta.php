@@ -138,9 +138,11 @@ class Meta
      */
     private function setImage($value)
     {
-        if (!isset($this->metas['image'])) {
+        if (!array_key_exists('image', $this->metas)) {
             $this->metas['image'] = [];
-        } elseif (count($this->metas['image']) < $this->config['image_limit']) {
+        }
+
+        if (count($this->metas['image']) < $this->config['image_limit']) {
             return $this->metas['image'][] = $value;
         }
     }
@@ -223,7 +225,7 @@ class Meta
      */
     private function tagString($name, $key, $value = null)
     {
-        if (!$this->isVisible($name, $key, $value)) {
+        if (empty($value) && !array_key_exists($key, $this->metas)) {
             return '';
         }
 
@@ -234,21 +236,7 @@ class Meta
             $tag .= $this->tagString('property', 'og:'.$key, $value);
         }
 
-        $this->processed[$name.$key] = true;
-
         return $tag;
-    }
-
-    /**
-     * @param  string $name
-     * @param  string $key
-     * @param  string $value
-     * @return boolean
-     */
-    private function isVisible($name, $key, $value)
-    {
-        return (!array_key_exists($name.$key, $this->processed)
-            && ($value || array_key_exists($key, $this->metas)));
     }
 
     /**
