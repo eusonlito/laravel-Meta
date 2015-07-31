@@ -71,6 +71,11 @@ class MetaTag
 
         // Set default locale
         $this->defaultLocale = $defaultLocale;
+
+        // Is locales a callback
+        if (is_callable($this->config['locales'])) {
+            $this->setLocales(call_user_func($this->config['locales']));
+        }
     }
 
     /**

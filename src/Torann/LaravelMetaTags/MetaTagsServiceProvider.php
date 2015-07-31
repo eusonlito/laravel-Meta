@@ -32,7 +32,7 @@ class MetaTagsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('metatag', function($app) {
+        $this->app['metatag'] = $this->app->share(function ($app) {
             return new MetaTag(
                 $app['request'],
                 $app['config']['meta-tags'],
