@@ -1,9 +1,10 @@
 <?php
-namespace Eusonlito\LaravelMeta;
 
-use Illuminate\Support\Facades\Facade as LFacade;
+namespace Torann\LaravelMetaTags\Facades;
 
-class Facade extends LFacade
+use Illuminate\Support\Facades\Facade;
+
+class MetaTag extends Facade
 {
     /**
      * Name of the binding in the IoC container
@@ -12,6 +13,6 @@ class Facade extends LFacade
      */
     protected static function getFacadeAccessor()
     {
-        return 'meta';
+        return 'metatag';
     }
 }

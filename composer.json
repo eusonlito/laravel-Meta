@@ -1,24 +1,33 @@
 {
-    "name": "eusonlito/laravel-meta",
-    "keywords": ["meta", "tags", "head", "laravel"],
-    "description": "A package to manage Header Meta Tags",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Lito",
-            "email": "lito@eordes.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.4"
+  "name": "torann/laravel-meta-tags",
+  "keywords": ["meta tags", "meta", "tags", "head", "laravel"],
+  "description": "A package to manage Header Meta Tags",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lito",
+      "email": "lito@eordes.com"
     },
-    "require-dev": {
-        "phpunit/phpunit": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Eusonlito\\LaravelMeta\\": "src/Eusonlito/LaravelMeta/"
-        }
-    },
-    "minimum-stability": "stable"
+    {
+      "name": "Daniel Stainback",
+      "email": "daniel@lyften.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "illuminate/support": "~5.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Torann\\LaravelMetaTags\\": "src/Torann/LaravelMetaTags/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1-dev"
+    }
+  }
 }

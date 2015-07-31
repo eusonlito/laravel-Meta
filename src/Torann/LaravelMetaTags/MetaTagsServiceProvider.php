@@ -1,9 +1,10 @@
 <?php
-namespace Eusonlito\LaravelMeta;
+
+namespace Torann\LaravelMetaTags;
 
 use Illuminate\Support\ServiceProvider;
 
-class MetaServiceProvider extends ServiceProvider
+class MetaTagsServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -20,7 +21,7 @@ class MetaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../../config/config.php' => config_path('meta.php')
+            __DIR__.'/../../config/config.php' => config_path('meta-tags.php')
         ]);
     }
 
@@ -31,8 +32,12 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('meta', function() {
-            return new Meta(config('meta'));
+        $this->app->singleton('metatag', function($app) {
+            return new MetaTag(
+                $app['request'],
+                $app['config']['meta-tags'],
+                $app['config']->get('app.locale')
+            );
         });
     }
 
@@ -43,6 +48,6 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['meta'];
+        return ['metatag'];
     }
 }
