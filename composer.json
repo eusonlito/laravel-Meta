@@ -24,10 +24,5 @@
     "psr-4": {
       "Torann\\LaravelMetaTags\\": "src/Torann/LaravelMetaTags/"
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.1-dev"
-    }
   }
 }
