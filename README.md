@@ -47,6 +47,22 @@ $ php artisan vendor:publish --provider="Torann\LaravelMetaTags\MetaTagsServiceP
 
 A configuration file will be publish to `config/meta-tags.php`.
 
+## Twitter Cards and OpenGraph
+
+Various settings for these options can be found in the `config/meta-tags.php` file.
+
+**Twitter Cards**
+
+```php
+{!! MetaTag::twitterCard() !!}
+```
+
+**OpenGraph**
+
+```php
+{!! MetaTag::openGraph() !!}
+```
+
 
 ## Examples
 
