@@ -172,7 +172,13 @@ class Meta
      */
     private function tagDefault($key, $value = null)
     {
-        return $this->tagMetaName($key, $value);
+        $html = $this->tagMetaName($key, $value);
+
+        if ((strpos($key, 'og:') !== 0) && in_array($key, $this->og, true)) {
+            $html .= $this->tagMetaProperty('og:'.$key, $value);
+        }
+
+        return $html;
     }
 
     /**
@@ -225,18 +231,13 @@ class Meta
      */
     private function tagString($name, $key, $value = null)
     {
-        if (empty($value) && !array_key_exists($key, $this->metas)) {
+        $original_key = str_replace('og:', '', $key);
+
+        if (empty($value) && !array_key_exists($original_key, $this->metas)) {
             return '';
         }
 
-        $value = $value ?: $this->metas[$key];
-        $tag = '<meta '.$name.'="'.$key.'" content="'.$value.'" />';
-
-        if ((strpos($key, 'og:') !== 0) && in_array($key, $this->og, true)) {
-            $tag .= $this->tagString('property', 'og:'.$key, $value);
-        }
-
-        return $tag;
+        return '<meta '.$name.'="'.$key.'" content="'.($value ?: $this->metas[$original_key]).'" />';
     }
 
     /**
