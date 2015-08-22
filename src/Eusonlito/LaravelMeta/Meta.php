@@ -172,7 +172,7 @@ class Meta
      */
     private function tagDefault($key, $value = null)
     {
-        return $this->tagMetaName($key, $value).$this->tagMetaProperty($key, $value);
+        return $this->tagMetaName($key, $value);
     }
 
     /**
