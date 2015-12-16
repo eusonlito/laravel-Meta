@@ -16,7 +16,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "laravel/meta": "4.2.x-dev"
+        "eusonlito/laravel-meta": "4.2.x-dev"
     }
 }
 ```
@@ -39,7 +39,7 @@ You can use this Facade anywhere in your application
 Publish the config file:
 
 ```
-php artisan config:publish laravel/meta
+php artisan config:publish eusonlito/laravel-meta
 ```
 
 #### app/controllers/homeController.php
