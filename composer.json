@@ -15,10 +15,11 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "illuminate/support": "~5.1"
+    "illuminate/support": "5.1.*|5.2.*"
   },
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "phpunit/phpunit": "^4.8",
+    "mockery/mockery": "^0.9.4"
   },
   "autoload": {
     "psr-4": {
