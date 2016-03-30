@@ -138,7 +138,7 @@ class Meta
 
         if ($title && $this->config['title_limit']) {
             $title = ' - '.$title;
-            $limit = $this->config['title_limit'] - strlen($title);
+            $limit = $this->config['title_limit'] - mb_strlen($title);
         } else {
             $limit = 'title';
         }
@@ -188,7 +188,7 @@ class Meta
     {
         $html = $this->tagMetaName($key, $value);
 
-        if ((strpos($key, 'og:') !== 0) && in_array($key, $this->og, true)) {
+        if ((mb_strpos($key, 'og:') !== 0) && in_array($key, $this->og, true)) {
             $html .= $this->tagMetaProperty('og:'.$key, $value);
         }
 
@@ -281,16 +281,16 @@ class Meta
             return $text;
         }
 
-        $length = strlen($text);
+        $length = mb_strlen($text);
 
         if ($length <= (int) $limit) {
             return $text;
         }
 
-        $text = substr($text, 0, ($limit -= 3));
+        $text = mb_substr($text, 0, ($limit -= 3));
 
-        if ($space = strrpos($text, ' ')) {
-            $text = substr($text, 0, $space);
+        if ($space = mb_strrpos($text, ' ')) {
+            $text = mb_substr($text, 0, $space);
         }
 
         return $text.'...';
