@@ -16,7 +16,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "eusonlito/laravel-meta": "2.0.*"
+        "eusonlito/laravel-meta": "3.0.*"
     }
 }
 ```
