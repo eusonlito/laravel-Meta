@@ -127,7 +127,7 @@ class MetaTag
     {
         return $this->createTag([
             'name' => $key,
-            'content' => $value
+            'content' => $value?:$this->metas[$key]
         ]);
     }
 
