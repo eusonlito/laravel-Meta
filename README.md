@@ -16,7 +16,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "eusonlito/laravel-meta": "master-dev"
+        "eusonlito/laravel-meta": "2.0.*"
     }
 }
 ```
@@ -29,12 +29,12 @@ Begin by installing this package through Composer.
 
 'providers' => [
     '...',
-    'Eusonlito\LaravelMeta\MetaServiceProvider',
+    Eusonlito\LaravelMeta\MetaServiceProvider::class
 ];
 
 'aliases' => [
     '...',
-    'Meta'    => 'Eusonlito\LaravelMeta\Facade',
+    'Meta'    => Eusonlito\LaravelMeta\Facade::class,
 ];
 ```
 
@@ -57,7 +57,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 
 use Meta;
 
-abstract class Controller extends BaseController {
+abstract class Controller extends BaseController
+{
     use DispatchesCommands, ValidatesRequests;
 
     public function __construct()
@@ -66,7 +67,7 @@ abstract class Controller extends BaseController {
         Meta::title('This is default page title to complete section title');
 
         # Default robots
-        Meta::meta('robots', 'index,follow');
+        Meta::set('robots', 'index,follow');
     }
 }
 ```
@@ -78,13 +79,14 @@ abstract class Controller extends BaseController {
 
 use Meta;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
     public function index()
     {
         # Section description
-        Meta::meta('title', 'You are at home');
-        Meta::meta('description', 'This is my home. Enjoy!');
-        Meta::meta('image', asset('images/home-logo.png'));
+        Meta::set('title', 'You are at home');
+        Meta::set('description', 'This is my home. Enjoy!');
+        Meta::set('image', asset('images/home-logo.png'));
 
         return view('index');
     }
@@ -92,9 +94,9 @@ class HomeController extends Controller {
     public function detail()
     {
         # Section description
-        Meta::meta('title', 'This is a detail page');
-        Meta::meta('description', 'All about this detail page');
-        Meta::meta('image', asset('images/detail-logo.png'));
+        Meta::set('title', 'This is a detail page');
+        Meta::set('description', 'All about this detail page');
+        Meta::set('image', asset('images/detail-logo.png'));
 
         return view('detail');
     }
@@ -102,12 +104,12 @@ class HomeController extends Controller {
     public function private()
     {
         # Section description
-        Meta::meta('title', 'Private Area');
-        Meta::meta('description', 'You shall not pass!');
-        Meta::meta('image', asset('images/locked-logo.png'));
+        Meta::set('title', 'Private Area');
+        Meta::set('description', 'You shall not pass!');
+        Meta::set('image', asset('images/locked-logo.png'));
 
         # Custom robots for this section
-        Meta::meta('robots', 'noindex,nofollow');
+        Meta::set('robots', 'noindex,nofollow');
 
         return view('private');
     }
@@ -125,13 +127,13 @@ class HomeController extends Controller {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="author" content="Lito - lito@eordes.com" />
 
-        <title><?= Meta::meta('title'); ?></title>
+        <title><?= Meta::get('title'); ?></title>
 
-        <?= Meta::tagMetaName('robots'); ?>
+        <?= Meta::tag('robots'); ?>
 
-        <?= Meta::tagMetaProperty('site_name', 'My site'); ?>
-        <?= Meta::tagMetaProperty('url', Request::url()); ?>
-        <?= Meta::tagMetaProperty('locale', 'en_EN'); ?>
+        <?= Meta::tag('site_name', 'My site'); ?>
+        <?= Meta::tag('url', Request::url()); ?>
+        <?= Meta::tag('locale', 'en_EN'); ?>
 
         <?= Meta::tag('title'); ?>
         <?= Meta::tag('description'); ?>
@@ -150,8 +152,7 @@ class HomeController extends Controller {
 ### Config
 
 ```php
-return array(
-
+return [
     /*
     |--------------------------------------------------------------------------
     | Limit title meta tag length
@@ -183,8 +184,19 @@ return array(
     |
     */
 
-    'image_limit' => 5
-);
+    'image_limit' => 5,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Available Tag formats
+    |--------------------------------------------------------------------------
+    |
+    | A list of tags formats to print with each definition
+    |
+    */
+
+    'tags' => ['Tag', 'MetaName', 'MetaProperty', 'TwitterCard'],
+];
 ```
 
 ### Using Meta outside Laravel
@@ -192,10 +204,10 @@ return array(
 #### Controller
 
 ```php
-require (__DIR__.'/vendor/autoload.php');
+require __DIR__.'/vendor/autoload.php';
 
 // Check default settings
-$config = require (__DIR__.'/src/config/config.php');
+$config = require __DIR__.'/src/config/config.php';
 
 $Meta = new Eusonlito\LaravelMeta\Meta($config);
 
@@ -203,24 +215,24 @@ $Meta = new Eusonlito\LaravelMeta\Meta($config);
 $Meta->title('This is default page title to complete section title');
 
 # Default robots
-$Meta->meta('robots', 'index,follow');
+$Meta->set('robots', 'index,follow');
 
 # Section description
-$Meta->meta('title', 'This is a detail page');
-$Meta->meta('description', 'All about this detail page');
-$Meta->meta('image', '/images/detail-logo.png');
+$Meta->set('title', 'This is a detail page');
+$Meta->set('description', 'All about this detail page');
+$Meta->set('image', '/images/detail-logo.png');
 ```
 
 #### Template
 
 ```php
-<title><?= $Meta->meta('title'); ?></title>
+<title><?= $Meta->get('title'); ?></title>
 
-<?= $Meta->tagMetaName('robots'); ?>
+<?= $Meta->tag('robots'); ?>
 
-<?= $Meta->tagMetaProperty('site_name', 'My site'); ?>
-<?= $Meta->tagMetaProperty('url', getenv('REQUEST_URI')); ?>
-<?= $Meta->tagMetaProperty('locale', 'en_EN'); ?>
+<?= $Meta->tag('site_name', 'My site'); ?>
+<?= $Meta->tag('url', getenv('REQUEST_URI')); ?>
+<?= $Meta->tag('locale', 'en_EN'); ?>
 
 <?= $Meta->tag('title'); ?>
 <?= $Meta->tag('description'); ?>

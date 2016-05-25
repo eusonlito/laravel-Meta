@@ -31,11 +31,11 @@ class Tests extends PHPUnit_Framework_TestCase
 
     public function testMetaTitle()
     {
-        $response = $this->Meta->meta('title', $text = self::text(50));
+        $response = $this->Meta->set('title', $text = self::text(50));
 
         $this->assertTrue($text === $response);
 
-        $response = $this->Meta->meta('title', $text = self::text(80));
+        $response = $this->Meta->set('title', $text = self::text(80));
 
         $this->assertNotTrue($text, $response);
         $this->assertTrue(mb_strlen($response) === 70);
@@ -43,11 +43,11 @@ class Tests extends PHPUnit_Framework_TestCase
 
     public function testMetaDescription()
     {
-        $response = $this->Meta->meta('description', $text = self::text(50));
+        $response = $this->Meta->set('description', $text = self::text(50));
 
         $this->assertTrue($text === $response);
 
-        $response = $this->Meta->meta('description', $text = self::text(250));
+        $response = $this->Meta->set('description', $text = self::text(250));
 
         $this->assertNotTrue($text === $response);
         $this->assertTrue(mb_strlen($response) === 200);
@@ -59,11 +59,11 @@ class Tests extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(self::$title === $response);
 
-        $response = $this->Meta->meta('title', $text = self::text(30));
+        $response = $this->Meta->set('title', $text = self::text(30));
 
         $this->assertTrue($text.' - '.self::$title === $response);
 
-        $response = $this->Meta->meta('title', $text = self::text(80));
+        $response = $this->Meta->set('title', $text = self::text(80));
 
         $this->assertNotTrue($text.' - '.self::$title === $response);
         $this->assertTrue(mb_strlen($response) === 70);
@@ -71,16 +71,16 @@ class Tests extends PHPUnit_Framework_TestCase
 
     public function testMetaImage()
     {
-        $response = $this->Meta->meta('image', $text = self::text(30));
+        $response = $this->Meta->set('image', $text = self::text(30));
 
         $this->assertTrue($text === $response);
 
-        $response = $this->Meta->meta('image', $text = self::text(150));
+        $response = $this->Meta->set('image', $text = self::text(150));
 
         $this->assertTrue($text === $response);
 
         for ($i = 0; $i < 5; $i++) {
-            $response = $this->Meta->meta('image', $text =self::text(80));
+            $response = $this->Meta->set('image', $text =self::text(80));
 
             if ($i > 2) {
                 $this->assertTrue($response === null);
@@ -89,124 +89,49 @@ class Tests extends PHPUnit_Framework_TestCase
             }
         }
 
-        $this->assertTrue(count($this->Meta->meta('image')) === 5);
+        $this->assertTrue(count($this->Meta->get('image')) === 5);
     }
 
     public function testTagTitle()
     {
         $this->Meta->title(self::$title);
-        $this->Meta->meta('title', $text = self::text(20));
+        $this->Meta->set('title', $text = self::text(20));
 
         $tag = $this->Meta->tag('title');
 
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 2);
-        $this->assertTrue(mb_substr_count($tag, 'title"') === 2);
-        $this->assertTrue(mb_strstr($tag, self::$title) ? true : false);
-        $this->assertTrue(mb_strstr($tag, $text) ? true : false);
-    }
-
-    public function testTagMetaNameTitle()
-    {
-        $this->Meta->title(self::$title);
-        $this->Meta->meta('title', $text = self::text(20));
-
-        $tag = $this->Meta->tagMetaName('title');
-
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 1);
-        $this->assertTrue(mb_substr_count($tag, 'title"') === 1);
-        $this->assertTrue(mb_strstr($tag, self::$title) ? true : false);
-        $this->assertTrue(mb_strstr($tag, $text) ? true : false);
-    }
-
-    public function testTagMetaPropertyTitle()
-    {
-        $this->Meta->title(self::$title);
-        $this->Meta->meta('title', $text = self::text(20));
-
-        $tag = $this->Meta->tagMetaProperty('title');
-
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 1);
-        $this->assertTrue(mb_substr_count($tag, 'title"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="title"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="twitter:title"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="og:title"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<title>') === 1);
         $this->assertTrue(mb_strstr($tag, self::$title) ? true : false);
         $this->assertTrue(mb_strstr($tag, $text) ? true : false);
     }
 
     public function testTagDescription()
     {
-        $this->Meta->meta('description', $text = self::text(150));
+        $this->Meta->set('description', $text = self::text(150));
 
         $tag = $this->Meta->tag('description');
 
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 2);
-        $this->assertTrue(mb_substr_count($tag, 'description"') === 2);
-        $this->assertTrue(mb_strstr($tag, $text) ? true : false);
-    }
-
-    public function testTagMetaNameDescription()
-    {
-        $this->Meta->meta('description', $text = self::text(150));
-
-        $tag = $this->Meta->tagMetaName('description');
-
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 1);
-        $this->assertTrue(mb_substr_count($tag, 'description"') === 1);
-        $this->assertTrue(mb_strstr($tag, $text) ? true : false);
-    }
-
-    public function testTagMetaPropertyDescription()
-    {
-        $this->Meta->meta('description', $text = self::text(150));
-
-        $tag = $this->Meta->tagMetaProperty('description');
-
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 1);
-        $this->assertTrue(mb_substr_count($tag, 'description"') === 1);
-        $this->assertTrue(mb_strstr($tag, $text) ? true : false);
-    }
-
-    public function testTagKeywords()
-    {
-        $this->Meta->meta('keywords', $text = self::text(150));
-
-        $tag = $this->Meta->tag('keywords');
-
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 1);
-        $this->assertTrue(mb_substr_count($tag, 'keywords"') === 1);
-        $this->assertTrue(mb_strstr($tag, $text) ? true : false);
-    }
-
-    public function testTagMetaNameKeywords()
-    {
-        $this->Meta->meta('keywords', $text = self::text(150));
-
-        $tag = $this->Meta->tagMetaName('keywords');
-
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 1);
-        $this->assertTrue(mb_substr_count($tag, 'keywords"') === 1);
-        $this->assertTrue(mb_strstr($tag, $text) ? true : false);
-    }
-
-    public function testTagMetaPropertyKeywords()
-    {
-        $this->Meta->meta('keywords', $text = self::text(150));
-
-        $tag = $this->Meta->tagMetaProperty('keywords');
-
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 1);
-        $this->assertTrue(mb_substr_count($tag, 'keywords"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="description"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="twitter:description"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="og:description"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<description>') === 0);
         $this->assertTrue(mb_strstr($tag, $text) ? true : false);
     }
 
     public function testTagImage()
     {
         for ($i = 0; $i < 10; $i++) {
-            $this->Meta->meta('image', self::text(80));
+            $this->Meta->set('image', self::text(80));
         }
 
         $tag = $this->Meta->tag('image');
 
-        $this->assertTrue(mb_substr_count($tag, '<meta') === 10);
-        $this->assertTrue(mb_substr_count($tag, '<link') === 5);
-        $this->assertTrue(mb_substr_count($tag, 'image') === 15);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="image"') === 5);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="twitter:image"') === 5);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="og:image"') === 5);
+        $this->assertTrue(mb_substr_count($tag, '<image>') === 0);
+        $this->assertTrue(mb_substr_count($tag, '<link rel="image_src"') === 5);
     }
 }

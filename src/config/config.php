@@ -1,7 +1,5 @@
 <?php
-
-return array(
-
+return [
     /*
     |--------------------------------------------------------------------------
     | Limit title meta tag length
@@ -33,5 +31,16 @@ return array(
     |
     */
 
-    'image_limit' => 5
-);
+    'image_limit' => 5,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Available Tag formats
+    |--------------------------------------------------------------------------
+    |
+    | A list of tags formats to print with each definition
+    |
+    */
+
+    'tags' => ['Tag', 'MetaName', 'MetaProperty', 'TwitterCard'],
+];
