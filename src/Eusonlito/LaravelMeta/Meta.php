@@ -171,7 +171,10 @@ class Meta
             return '';
         }
 
-        $values = is_array($values) ? $values : [$values];
+        if (!is_array($values)) {
+            $values = [$values];
+        }
+
         $html = '';
 
         foreach ($this->config['tags'] as $tag) {
