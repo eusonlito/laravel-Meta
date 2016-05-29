@@ -246,9 +246,7 @@ $Meta->set('image', '/images/detail-logo.png');
 
 #### Updates from 2.*
 
-``Meta::meta('title', 'Section Title')`` > ``Meta::set('title', 'Section Title')``
-
-``Meta::meta('title')`` > ``Meta::get('title')``
-
-``Meta::tagMetaName('title')`` > ``Meta::tag('title')``
-``Meta::tagMetaProperty('title')`` > ``Meta::tag('title')``
+* ``Meta::meta('title', 'Section Title')`` > ``Meta::set('title', 'Section Title')``
+* ``Meta::meta('title')`` > ``Meta::get('title')``
+* ``Meta::tagMetaName('title')`` > ``Meta::tag('title')``
+* ``Meta::tagMetaProperty('title')`` > ``Meta::tag('title')``
