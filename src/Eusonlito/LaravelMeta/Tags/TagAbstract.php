@@ -7,7 +7,7 @@ abstract class TagAbstract implements TagInterface
 
     public static function tag($key, $value)
     {
-        if (in_array($key, static::$custom)) {
+        if (in_array($key, static::$custom, true)) {
             $method = 'tag'.self::studly($key);
         } else {
             $method = 'tagDefault';

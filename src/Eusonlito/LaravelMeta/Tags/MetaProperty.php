@@ -10,7 +10,7 @@ class MetaProperty extends TagAbstract
 
     public static function tagDefault($key, $value)
     {
-        if (in_array($key, self::$available)) {
+        if (in_array($key, self::$available, true)) {
             return '<meta property="og:'.$key.'" content="'.$value.'" />';
         }
     }

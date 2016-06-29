@@ -8,7 +8,7 @@ class Tag extends TagAbstract
 
     public static function tagDefault($key, $value)
     {
-        if (in_array($key, self::$available)) {
+        if (in_array($key, self::$available, true)) {
             return '<'.$key.'>'.$value.'</'.$key.'>';
         }
     }

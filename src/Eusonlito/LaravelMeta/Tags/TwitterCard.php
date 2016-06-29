@@ -14,7 +14,7 @@ class TwitterCard extends TagAbstract
 
     public static function tagDefault($key, $value)
     {
-        if (in_array($key, self::$available)) {
+        if (in_array($key, self::$available, true)) {
             return '<meta name="twitter:'.$key.'" content="'.$value.'" />';
         }
     }
