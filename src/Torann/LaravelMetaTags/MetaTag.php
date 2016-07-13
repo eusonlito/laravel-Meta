@@ -128,7 +128,7 @@ class MetaTag
     {
         return $this->createTag([
             'name' => $key,
-            'content' => $value ?: Arr::get($this->metas, $key, '')
+            'content' => $value ?: Arr::get($this->metas, $key, ''),
         ]);
     }
 
