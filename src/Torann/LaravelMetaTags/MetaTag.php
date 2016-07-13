@@ -3,6 +3,7 @@
 namespace Torann\LaravelMetaTags;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class MetaTag
 {
@@ -127,7 +128,7 @@ class MetaTag
     {
         return $this->createTag([
             'name' => $key,
-            'content' => $value
+            'content' => $value ?: Arr::get($this->metas, $key, '')
         ]);
     }
 
