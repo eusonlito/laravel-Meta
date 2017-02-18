@@ -1,4 +1,4 @@
-# HTML Meta Tags management package available for for Laravel 5/5.1/5.2/5.3/5.4
+# HTML Meta Tags management package available for Laravel 5/5.1/5.2/5.3/5.4
 
 [![Build Status](https://travis-ci.org/eusonlito/laravel-Meta.svg?branch=master)](https://travis-ci.org/eusonlito/laravel-Meta)
 [![Latest Stable Version](https://poser.pugx.org/laravel/meta/v/stable.png)](https://packagist.org/packages/laravel/meta)
