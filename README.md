@@ -43,7 +43,7 @@ Now you have a ```Meta``` facade available.
 Publish the config file:
 
 ```
-php artisan vendor:publish
+php artisan vendor:publish --provider="Eusonlito\LaravelMeta\MetaServiceProvider"
 ```
 
 #### app/Http/Controllers/Controller.php
