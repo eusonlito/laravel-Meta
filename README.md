@@ -138,7 +138,7 @@ class HomeController extends Controller
         {!! Meta::tag('title') !!}
         {!! Meta::tag('description') !!}
 
-        {{-- Print custom section images and a default image if not set --}}
+        {{-- Print custom section images and a default image after that --}}
         {!! Meta::tag('image', asset('images/default-logo.png')) !!}
     </head>
 
@@ -235,9 +235,8 @@ $Meta->set('image', '/images/detail-logo.png');
 
 <?= $Meta->tag('title'); ?>
 <?= $Meta->tag('description'); ?>
-<?= $Meta->tag('image'); ?>
 
-# Set default share picture after custom section pictures
+# Print custom section image and a default image after that
 <?= $Meta->tag('image', '/images/default-logo.png'); ?>
 ```
 
