@@ -134,4 +134,43 @@ class Tests extends PHPUnit_Framework_TestCase
         $this->assertTrue(mb_substr_count($tag, '<image>') === 0);
         $this->assertTrue(mb_substr_count($tag, '<link rel="image_src"') === 5);
     }
+
+    public function testTagImageDefault()
+    {
+        $tag = $this->Meta->tag('image', self::text(80));
+
+        $this->assertTrue(mb_substr_count($tag, '<meta name="image"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="twitter:image"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="og:image"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<image>') === 0);
+        $this->assertTrue(mb_substr_count($tag, '<link rel="image_src"') === 1);
+
+        for ($i = 0; $i < 3; $i++) {
+            $this->Meta->set('image', self::text(80));
+        }
+
+        $tag = $this->Meta->tag('image');
+
+        $this->assertTrue(mb_substr_count($tag, '<meta name="image"') === 3);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="twitter:image"') === 3);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="og:image"') === 3);
+        $this->assertTrue(mb_substr_count($tag, '<image>') === 0);
+        $this->assertTrue(mb_substr_count($tag, '<link rel="image_src"') === 3);
+
+        $tag = $this->Meta->tag('image', self::text(80));
+
+        $this->assertTrue(mb_substr_count($tag, '<meta name="image"') === 4);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="twitter:image"') === 4);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="og:image"') === 4);
+        $this->assertTrue(mb_substr_count($tag, '<image>') === 0);
+        $this->assertTrue(mb_substr_count($tag, '<link rel="image_src"') === 4);
+
+        $tag = $this->Meta->tag('image', self::text(80));
+
+        $this->assertTrue(mb_substr_count($tag, '<meta name="image"') === 4);
+        $this->assertTrue(mb_substr_count($tag, '<meta name="twitter:image"') === 4);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="og:image"') === 4);
+        $this->assertTrue(mb_substr_count($tag, '<image>') === 0);
+        $this->assertTrue(mb_substr_count($tag, '<link rel="image_src"') === 4);
+    }
 }

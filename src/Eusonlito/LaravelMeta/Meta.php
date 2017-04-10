@@ -51,6 +51,7 @@ class Meta
 
     /**
      * @param  array $config
+     *
      * @return this
      */
     public function __construct($config = [])
@@ -59,11 +60,14 @@ class Meta
             $this->setConfig($config);
         }
 
+        $this->metas['image'] = [];
+
         return $this;
     }
 
     /**
      * @param  array $config
+     *
      * @return this
      */
     public function setConfig(array $config = [])
@@ -82,22 +86,23 @@ class Meta
     }
 
     /**
-     * @param  string      $key
-     * @param  null|string $default
+     * @param  string $title
+     *
      * @return string
      */
-    public function get($key, $default = null)
+    public function title($title = null)
     {
-        if (empty($this->metas[$key])) {
-            return $default;
+        if ($title === null) {
+            return $this->title;
         }
 
-        return $this->metas[$key];
+        return $this->title = $this->plain($title);
     }
 
     /**
      * @param  string $key
      * @param  string $value
+     *
      * @return string
      */
     public function set($key, $value)
@@ -113,20 +118,8 @@ class Meta
     }
 
     /**
-     * @param  string $title
-     * @return string
-     */
-    public function title($title = null)
-    {
-        if ($title === null) {
-            return $this->title;
-        }
-
-        return $this->title = $this->plain($title);
-    }
-
-    /**
      * @param  string $value
+     *
      * @return string
      */
     private function setTitle($value)
@@ -145,13 +138,12 @@ class Meta
 
     /**
      * @param  string $value
+     *
      * @return string
      */
     private function setImage($value)
     {
-        if (empty($this->metas['image'])) {
-            $this->metas['image'] = [];
-        } elseif (count($this->metas['image']) >= $this->config['image_limit']) {
+        if (count($this->metas['image']) >= $this->config['image_limit']) {
             return;
         }
 
@@ -161,8 +153,46 @@ class Meta
     }
 
     /**
-     * @param  string $key
-     * @param  string $default
+     * @param  string       $key
+     * @param  string|array $default
+     *
+     * @return string
+     */
+    public function get($key, $default = null)
+    {
+        $method = 'get'.$key;
+
+        if (method_exists($this, $method)) {
+            return $this->$method($default);
+        }
+
+        if (empty($this->metas[$key])) {
+            return $default;
+        }
+
+        return $this->metas[$key];
+    }
+
+    /**
+     * @param  string|array $default
+     *
+     * @return string
+     */
+    public function getImage($default)
+    {
+        if ($default) {
+            $default = is_array($default) ? $default : [$default];
+        } else {
+            $default = [];
+        }
+
+        return array_slice(array_merge($this->metas['image'], $default), 0, $this->config['image_limit']);
+    }
+
+    /**
+     * @param  string       $key
+     * @param  string|array $default
+     *
      * @return string
      */
     public function tag($key, $default = null)
@@ -190,6 +220,7 @@ class Meta
 
     /**
      * @param  string $key
+     *
      * @return string
      */
     public function tags(array $keys = [])

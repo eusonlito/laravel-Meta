@@ -43,7 +43,7 @@ Now you have a ```Meta``` facade available.
 Publish the config file:
 
 ```
-php artisan vendor:publish
+php artisan vendor:publish --provider="Eusonlito\LaravelMeta\MetaServiceProvider"
 ```
 
 #### app/Http/Controllers/Controller.php
@@ -127,22 +127,19 @@ class HomeController extends Controller
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="author" content="Lito - lito@eordes.com" />
 
-        <title><?= Meta::get('title'); ?></title>
+        <title>{!! Meta::get('title') !!}</title>
 
-        <?= Meta::tag('robots'); ?>
+        {!! Meta::tag('robots') !!}
 
-        <?= Meta::tag('site_name', 'My site'); ?>
-        <?= Meta::tag('url', Request::url()); ?>
-        <?= Meta::tag('locale', 'en_EN'); ?>
+        {!! Meta::tag('site_name', 'My site') !!}
+        {!! Meta::tag('url', Request::url()); !!}
+        {!! Meta::tag('locale', 'en_EN') !!}
 
-        <?= Meta::tag('title'); ?>
-        <?= Meta::tag('description'); ?>
-        <?= Meta::tag('image'); ?>
+        {!! Meta::tag('title') !!}
+        {!! Meta::tag('description') !!}
 
-        # Set default share picture after custom section pictures
-        <?= Meta::set('image', asset('images/default-logo.png')); ?>
-
-        <?= Meta::tag('image'); ?>
+        {{-- Print custom section images and a default image after that --}}
+        {!! Meta::tag('image', asset('images/default-logo.png')) !!}
     </head>
 
     <body>
@@ -238,9 +235,8 @@ $Meta->set('image', '/images/detail-logo.png');
 
 <?= $Meta->tag('title'); ?>
 <?= $Meta->tag('description'); ?>
-<?= $Meta->tag('image'); ?>
 
-# Set default share picture after custom section pictures
+# Print custom section image and a default image after that
 <?= $Meta->tag('image', '/images/default-logo.png'); ?>
 ```
 
