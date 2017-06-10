@@ -191,6 +191,19 @@ class MetaTag
     }
 
     /**
+     * Create Facebook app ID tag
+     *
+     * @return string
+     */
+    public function fbAppId()
+    {
+        return $this->createTag([
+            'property' => 'fb:app_id',
+            'content' => $this->get('fb:app_id'),
+        ]);
+    }
+
+    /**
      * Create twitter card tags
      *
      * @return string
