@@ -19,5 +19,15 @@
         "psr-4": {
             "Eusonlito\\LaravelMeta\\": "src/Eusonlito/LaravelMeta/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eusonlito\\LaravelMeta\\MetaServiceProvider"
+            ],
+            "aliases": {
+                "Meta": "Eusonlito\\LaravelMeta\\Facade"
+            }
+        }
     }
 }
