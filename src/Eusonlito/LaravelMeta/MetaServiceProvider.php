@@ -31,9 +31,11 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('meta', function () {
+        $this->app->singleton(Meta::class, function () {
             return new Meta(config('meta'));
         });
+
+        $this->app->alias(Meta::class, 'meta');
     }
 
     /**
@@ -43,6 +45,6 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['meta'];
+        return [Meta::class, 'meta'];
     }
 }
