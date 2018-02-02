@@ -2,6 +2,7 @@
 namespace Eusonlito\LaravelMeta;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 
 class MetaServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,8 @@ class MetaServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/config.php' => config_path('meta.php')
         ]);
+
+        $this->addBladeDirectives();
     }
 
     /**
@@ -44,5 +47,23 @@ class MetaServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['meta'];
+    }
+
+    /**
+     * Register blade directives
+     *
+     * @return void
+     */
+    protected function addBladeDirectives()
+    {
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+            $bladeCompiler->directive('meta', function ($arguments) {
+                return "<?php echo Meta::tag($arguments); ?>";
+            });
+
+            $bladeCompiler->directive('metas', function ($arguments) {
+                return "<?php echo Meta::tags($arguments); ?>";
+            });
+        });
     }
 }
