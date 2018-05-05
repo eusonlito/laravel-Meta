@@ -7,7 +7,7 @@ trait FixesTrait
      * @param  string $text
      * @return string
      */
-    private function plain($text)
+    protected function plain($text)
     {
         return trim(str_replace('"', '&quot;', preg_replace('/[\r\n\s]+/', ' ', strip_tags($text))));
     }
@@ -17,7 +17,7 @@ trait FixesTrait
      * @param  string $key
      * @return string
      */
-    private function cut($text, $key)
+    protected function cut($text, $key)
     {
         if (empty($text) || !is_string($text)) {
             return $text;
