@@ -122,9 +122,9 @@ class Meta
      *
      * @return void
      */
-    public function unset($key)
+    public function remove($key)
     {
-        $method = 'unset'.$key;
+        $method = 'remove'.$key;
 
         if (method_exists($this, $method)) {
             $this->$method();
@@ -171,7 +171,7 @@ class Meta
     /**
      * @return void
      */
-    private function unsetImage()
+    private function removeImage()
     {
         $this->metas['image'] = [];
     }

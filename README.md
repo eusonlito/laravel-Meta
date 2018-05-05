@@ -101,7 +101,7 @@ class HomeController extends Controller
         Meta::set('description', 'All about this detail page');
 
         # Remove previous images
-        Meta::unset('image');
+        Meta::remove('image');
 
         # Add only this last image
         Meta::set('image', asset('images/detail-logo.png'));
