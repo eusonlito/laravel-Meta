@@ -118,6 +118,22 @@ class Meta
     }
 
     /**
+     * @param  string $key
+     *
+     * @return void
+     */
+    public function unset($key)
+    {
+        $method = 'unset'.$key;
+
+        if (method_exists($this, $method)) {
+            $this->$method();
+        } else {
+            unset($this->metas[$key]);
+        }
+    }
+
+    /**
      * @param  string $value
      *
      * @return string
@@ -150,6 +166,14 @@ class Meta
         $this->metas['image'][] = $value;
 
         return $value;
+    }
+
+    /**
+     * @return void
+     */
+    private function unsetImage()
+    {
+        $this->metas['image'] = [];
     }
 
     /**
