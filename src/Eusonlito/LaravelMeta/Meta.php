@@ -153,7 +153,7 @@ class Meta
     protected function setImage($value)
     {
         if (count($this->metas['image']) >= $this->config['image_limit']) {
-            return;
+            return '';
         }
 
         $this->metas['image'][] = $value;
@@ -173,7 +173,7 @@ class Meta
      * @param  string       $key
      * @param  string|array $default = ''
      *
-     * @return string
+     * @return string|array
      */
     public function get($key, $default = '')
     {
@@ -193,7 +193,7 @@ class Meta
     /**
      * @param  string|array $default
      *
-     * @return string
+     * @return array
      */
     public function getImage($default)
     {
