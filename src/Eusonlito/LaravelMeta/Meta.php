@@ -31,11 +31,6 @@ class Meta
     ];
 
     /**
-     * @var array
-     */
-    private $processed = [];
-
-    /**
      * @var object;
      */
     private static $instance;
