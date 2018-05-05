@@ -8,22 +8,22 @@ class Meta
     /**
      * @var array
      */
-    private $config = [];
+    protected $config = [];
 
     /**
      * @var array
      */
-    private $metas = [];
+    protected $metas = [];
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var array
      */
-    private $defaults = [
+    protected $defaults = [
         'title_limit' => 70,
         'description_limit' => 200,
         'image_limit' => 5,
@@ -33,10 +33,10 @@ class Meta
     /**
      * @var object;
      */
-    private static $instance;
+    protected static $instance;
 
     /**
-     * @param  array $config
+     * @param  array $config = []
      * @return object
      */
     public static function getInstance(array $config = [])
@@ -45,23 +45,21 @@ class Meta
     }
 
     /**
-     * @param  array $config
+     * @param  array $config = []
      *
      * @return this
      */
     public function __construct($config = [])
     {
-        if ($config) {
+        if (!empty($config)) {
             $this->setConfig($config);
         }
 
         $this->metas['image'] = [];
-
-        return $this;
     }
 
     /**
-     * @param  array $config
+     * @param  array $config = []
      *
      * @return this
      */
@@ -81,7 +79,7 @@ class Meta
     }
 
     /**
-     * @param  string $title
+     * @param  string|null $title = null
      *
      * @return string
      */
@@ -133,7 +131,7 @@ class Meta
      *
      * @return string
      */
-    private function setTitle($value)
+    protected function setTitle($value)
     {
         $title = $this->title;
 
@@ -152,10 +150,10 @@ class Meta
      *
      * @return string
      */
-    private function setImage($value)
+    protected function setImage($value)
     {
         if (count($this->metas['image']) >= $this->config['image_limit']) {
-            return;
+            return '';
         }
 
         $this->metas['image'][] = $value;
@@ -166,18 +164,18 @@ class Meta
     /**
      * @return void
      */
-    private function removeImage()
+    protected function removeImage()
     {
         $this->metas['image'] = [];
     }
 
     /**
      * @param  string       $key
-     * @param  string|array $default
+     * @param  string|array $default = ''
      *
-     * @return string
+     * @return string|array
      */
-    public function get($key, $default = null)
+    public function get($key, $default = '')
     {
         $method = 'get'.$key;
 
@@ -195,7 +193,7 @@ class Meta
     /**
      * @param  string|array $default
      *
-     * @return string
+     * @return array
      */
     public function getImage($default)
     {
@@ -210,11 +208,11 @@ class Meta
 
     /**
      * @param  string       $key
-     * @param  string|array $default
+     * @param  string|array $default = ''
      *
      * @return string
      */
-    public function tag($key, $default = null)
+    public function tag($key, $default = '')
     {
         if (!($values = $this->get($key, $default))) {
             return '';
@@ -238,7 +236,7 @@ class Meta
     }
 
     /**
-     * @param  string $key
+     * @param  array $keys = []
      *
      * @return string
      */
