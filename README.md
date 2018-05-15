@@ -64,7 +64,7 @@ abstract class Controller extends BaseController
     public function __construct()
     {
         # Default title
-        Meta::title('This is default page title to complete section title');
+        Meta::set('title', 'This is default page title to complete section title');
 
         # Default robots
         Meta::set('robots', 'index,follow');
@@ -140,7 +140,7 @@ class HomeController extends Controller
         {!! Meta::tag('robots') !!}
 
         {!! Meta::tag('site_name', 'My site') !!}
-        {!! Meta::tag('url', Request::url()); !!}
+        {!! Meta::tag('url', Request::url()) !!}
         {!! Meta::tag('locale', 'en_EN') !!}
 
         {!! Meta::tag('title') !!}
@@ -219,7 +219,7 @@ $config = require __DIR__.'/src/config/config.php';
 $Meta = new Eusonlito\LaravelMeta\Meta($config);
 
 # Default title
-$Meta->title('This is default page title to complete section title');
+$Meta->set('title', 'This is default page title to complete section title');
 
 # Default robots
 $Meta->set('robots', 'index,follow');
