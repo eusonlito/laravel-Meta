@@ -89,7 +89,13 @@ class Meta
             return $this->title;
         }
 
-        return $this->title = $this->plain($title);
+        $title = $this->plain($title);
+
+        if (empty($this->metas['title'])) {
+            $this->metas['title'] = $title;
+        }
+
+        return $this->title = $title;
     }
 
     /**
