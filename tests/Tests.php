@@ -84,7 +84,7 @@ class Tests extends TestCase
             $response = $this->Meta->set('image', $text =self::text(80));
 
             if ($i > 2) {
-                $this->assertTrue($response === null);
+                $this->assertTrue(empty($response));
             } else {
                 $this->assertTrue($text === $response);
             }

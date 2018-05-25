@@ -68,6 +68,9 @@ abstract class Controller extends BaseController
 
         # Default robots
         Meta::set('robots', 'index,follow');
+
+        # Default image
+        Meta::set('image', asset('images/logo.png'));
     }
 }
 ```
@@ -96,6 +99,11 @@ class HomeController extends Controller
         # Section description
         Meta::set('title', 'This is a detail page');
         Meta::set('description', 'All about this detail page');
+
+        # Remove previous images
+        Meta::remove('image');
+
+        # Add only this last image
         Meta::set('image', asset('images/detail-logo.png'));
 
         return view('detail');
