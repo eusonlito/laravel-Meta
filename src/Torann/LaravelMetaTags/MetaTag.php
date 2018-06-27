@@ -206,7 +206,7 @@ class MetaTag
 
             if ($value && !isset($html[$tag])) {
                 $html[$tag] = $this->createTag([
-                    'property' => "twitter:{$tag}",
+                    'name' => "twitter:{$tag}",
                     'content' => $value
                 ]);
             }
@@ -215,7 +215,7 @@ class MetaTag
         // Set image
         if (empty($html['image:src']) && $this->get('image')) {
             $html['image:src'] = $this->createTag([
-                'property' => "twitter:image:src",
+                'name' => "twitter:image:src",
                 'content' => $this->get('image')
             ]);
         }
@@ -223,7 +223,7 @@ class MetaTag
         // Set domain
         if (empty($html['domain'])) {
             $html['domain'] = $this->createTag([
-                'property' => "twitter:domain",
+                'name' => "twitter:domain",
                 'content' => $this->request->getHttpHost()
             ]);
         }
