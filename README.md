@@ -156,6 +156,42 @@ class HomeController extends Controller
 </html>
 ```
 
+Or you can use Blade directives:
+
+```php
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Lito - lito@eordes.com" />
+
+        <title>{!! Meta::get('title') !!}</title>
+
+        @meta('robots')
+
+        @meta('site_name', 'My site')
+        @meta('url', Request::url())
+        @meta('locale', 'en_EN')
+
+        @meta('title')
+        @meta('description')
+
+        {{-- Print custom section images and a default image after that --}}
+        @meta('image', asset('images/default-logo.png'))
+
+        {{-- Or use @metas to get all tags at once --}}
+        @metas
+        
+    </head>
+
+    <body>
+        ...
+    </body>
+</html>
+```
+
 ### Config
 
 ```php
