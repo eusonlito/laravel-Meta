@@ -3,7 +3,7 @@ namespace Eusonlito\LaravelMeta\Tags;
 
 class Tag extends TagAbstract
 {
-    protected static $custom = ['image'];
+    protected static $custom = ['image', 'canonical'];
     protected static $available = ['title'];
 
     public static function tagDefault($key, $value)
@@ -16,5 +16,10 @@ class Tag extends TagAbstract
     public static function tagImage($key, $value)
     {
         return '<link rel="image_src" href="'.$value.'" />';
+    }
+
+    public static function tagCanonical($key, $value)
+    {
+        return '<link rel="canonical" href="'.$value.'" />';
     }
 }
