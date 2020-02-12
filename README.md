@@ -106,6 +106,9 @@ class HomeController extends Controller
         # Add only this last image
         Meta::set('image', asset('images/detail-logo.png'));
 
+        # Canonical URL
+        Meta::set('canonical', 'http://example.com');
+
         return view('detail');
     }
 
@@ -146,6 +149,8 @@ class HomeController extends Controller
         {!! Meta::tag('title') !!}
         {!! Meta::tag('description') !!}
 
+        {!! Meta::tag('canonical') !!}
+
         {{-- Print custom section images and a default image after that --}}
         {!! Meta::tag('image', asset('images/default-logo.png')) !!}
     </head>
@@ -177,6 +182,8 @@ Or you can use Blade directives:
 
         @meta('title')
         @meta('description')
+
+        @meta('canonical')
 
         {{-- Print custom section images and a default image after that --}}
         @meta('image', asset('images/default-logo.png'))
@@ -264,6 +271,9 @@ $Meta->set('robots', 'index,follow');
 $Meta->set('title', 'This is a detail page');
 $Meta->set('description', 'All about this detail page');
 $Meta->set('image', '/images/detail-logo.png');
+
+# Canonical URL
+$Meta->set('canonical', 'http://example.com');
 ```
 
 #### Template
@@ -279,6 +289,8 @@ $Meta->set('image', '/images/detail-logo.png');
 
 <?= $Meta->tag('title'); ?>
 <?= $Meta->tag('description'); ?>
+
+<?= $Meta->tag('canonical'); ?>
 
 # Print custom section image and a default image after that
 <?= $Meta->tag('image', '/images/default-logo.png'); ?>
