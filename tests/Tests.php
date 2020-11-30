@@ -1,12 +1,12 @@
 <?php
 use Eusonlito\LaravelMeta\Meta;
 
-class Tests extends PHPUnit_Framework_TestCase
+class Tests extends PHPUnit\Framework\TestCase
 {
     protected static $title;
     protected $Meta;
 
-    public function setUp()
+    public function setUp(): void
     {
         self::$title = self::text(20);
 
