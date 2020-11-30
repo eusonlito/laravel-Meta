@@ -1,6 +1,8 @@
 <?php
 namespace Eusonlito\LaravelMeta;
 
+use Eusonlito\LaravelMeta\Tags\MetaProduct;
+
 class Meta
 {
     use FixesTrait;
@@ -27,7 +29,7 @@ class Meta
         'title_limit' => 70,
         'description_limit' => 200,
         'image_limit' => 5,
-        'tags' => ['Tag', 'MetaName', 'MetaProperty', 'TwitterCard']
+        'tags' => ['Tag', 'MetaName', 'MetaProperty', 'MetaProduct', 'TwitterCard']
     ];
 
     /**
@@ -106,13 +108,15 @@ class Meta
      */
     public function set($key, $value)
     {
-        $value = $this->plain($value);
+        if (!is_array($value)) {
+            $value = $this->plain($value);   
+        }
+
         $method = 'set'.$key;
 
         if (method_exists($this, $method)) {
             return $this->$method($value);
         }
-
         return $this->metas[$key] = self::cut($value, $key);
     }
 
@@ -176,6 +180,20 @@ class Meta
     }
 
     /**
+     * @param  string $value
+     *
+     * @return string
+     */
+    protected function setProduct($value)
+    {
+        $this->metas['product'][] = $value;
+
+        $this->set('type', 'og:product');
+
+        return $value;
+    }
+
+    /**
      * @param  string       $key
      * @param  string|array $default = ''
      *
@@ -210,6 +228,15 @@ class Meta
         }
 
         return array_slice(array_merge($this->metas['image'], $default), 0, $this->config['image_limit']);
+    }
+    /**
+     * @param  string|array $default
+     *
+     * @return array
+     */
+    public function getProduct ()
+    {
+        return $this->metas['product'];
     }
 
     /**
