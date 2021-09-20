@@ -12,7 +12,9 @@ class MetaProduct extends TagAbstract
         if (!is_array($values)) {
             return;
         }
+
         $html = '';
+
         foreach($values as $key => $value) {
             if (in_array($key, self::$available, true)) {
                 $html .= '<meta property="'.self::propertyTag($key).'" content="'.$value.'" />';
@@ -20,19 +22,20 @@ class MetaProduct extends TagAbstract
         }
 
         return $html;
-        
     }
 
     public static function propertyTag ($key)
     {
         $tag = 'product:';
+
         switch ($key) {
+            case 'amount':
             case 'price':
                 $tag .= 'price:amount';
-            break;
+                break;
             case 'currency':
                 $tag .= 'price:currency';
-            break; 
+                break; 
         } 
 
         return $tag;
