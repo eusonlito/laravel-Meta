@@ -1,12 +1,12 @@
 <?php
 use Eusonlito\LaravelMeta\Meta;
 
-class Tests extends PHPUnit_Framework_TestCase
+class Tests extends PHPUnit\Framework\TestCase
 {
     protected static $title;
     protected $Meta;
 
-    public function setUp()
+    public function setUp(): void
     {
         self::$title = self::text(20);
 
@@ -172,5 +172,18 @@ class Tests extends PHPUnit_Framework_TestCase
         $this->assertTrue(mb_substr_count($tag, '<meta property="og:image"') === 4);
         $this->assertTrue(mb_substr_count($tag, '<image>') === 0);
         $this->assertTrue(mb_substr_count($tag, '<link rel="image_src"') === 4);
+    }
+
+    public function testTagProduct()
+    {
+
+        $this->Meta->set('product', [
+            'price' => 100,
+            'currency' => 'EUR'
+        ]);
+
+        $tag = $this->Meta->tag('product');
+        $this->assertTrue(mb_substr_count($tag, '<meta property="product:price:amount"') === 1);
+        $this->assertTrue(mb_substr_count($tag, '<meta property="product:price:currency"') === 1);
     }
 }

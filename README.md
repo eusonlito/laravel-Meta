@@ -199,6 +199,47 @@ Or you can use Blade directives:
 </html>
 ```
 
+### MetaProduct / og:product
+This will allow you to add product data to your meta data. See [Open Graph product object](https://developers.facebook.com/docs/payments/product/)
+```php
+// resources/views/html.php
+
+<head>
+    ...
+    {!! Meta::tag('type') !!} // this is needed for Meta Product to change the og:type to og:product
+    {!! Meta::tag('product') !!}
+</head>
+
+```
+
+Add your product data from your controller
+
+```php
+<?php namespace App\Http\Controllers;
+
+use Meta;
+
+class ProductController extends Controller
+{
+    public function show()
+    {
+        # Add product meta
+        Meta::set('product', [
+            'price' => 100,
+            'currency' => 'EUR',
+        ]);
+        
+        # if multiple currencies just add more product metas
+        Meta::set('product', [
+            'price' => 100,
+            'currency' => 'USD',
+        ]);
+
+        return view('index');
+    }
+}
+```
+
 ### Config
 
 ```php
@@ -245,7 +286,7 @@ return [
     |
     */
 
-    'tags' => ['Tag', 'MetaName', 'MetaProperty', 'TwitterCard'],
+    'tags' => ['Tag', 'MetaName', 'MetaProperty', 'MetaProduct', 'TwitterCard'],
 ];
 ```
 
