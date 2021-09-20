@@ -234,7 +234,7 @@ class Meta
      *
      * @return array
      */
-    public function getProduct ()
+    public function getProduct()
     {
         return $this->metas['product'];
     }
