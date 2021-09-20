@@ -15,7 +15,7 @@ class MetaProduct extends TagAbstract
 
         $html = '';
 
-        foreach($values as $key => $value) {
+        foreach ($values as $key => $value) {
             if (in_array($key, self::$available, true)) {
                 $html .= '<meta property="'.self::propertyTag($key).'" content="'.$value.'" />';
             }    
@@ -24,7 +24,7 @@ class MetaProduct extends TagAbstract
         return $html;
     }
 
-    public static function propertyTag ($key)
+    public static function propertyTag($key)
     {
         $tag = 'product:';
 
