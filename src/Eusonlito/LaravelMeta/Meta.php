@@ -260,7 +260,7 @@ class Meta
         foreach ($this->config['tags'] as $tag) {
             $class = __NAMESPACE__.'\\Tags\\'.$tag;
 
-            foreach ($values as $value) {
+            foreach (array_unique($values) as $value) {
                 $html .= $class::tag($key, $value);
             }
         }
