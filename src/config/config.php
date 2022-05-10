@@ -43,4 +43,15 @@ return [
     */
 
     'tags' => ['Tag', 'MetaName', 'MetaProperty', 'TwitterCard'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Strings Separator
+    |--------------------------------------------------------------------------
+    |
+    | Use this string to separate default and custom title.
+    |
+    */
+
+    'separator' => ' - ',
 ];

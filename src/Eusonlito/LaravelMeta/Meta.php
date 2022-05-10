@@ -27,7 +27,8 @@ class Meta
         'title_limit' => 70,
         'description_limit' => 200,
         'image_limit' => 5,
-        'tags' => ['Tag', 'MetaName', 'MetaProperty', 'TwitterCard']
+        'tags' => ['Tag', 'MetaName', 'MetaProperty', 'TwitterCard'],
+        'separator' => ' - '
     ];
 
     /**
@@ -37,6 +38,7 @@ class Meta
 
     /**
      * @param  array $config = []
+     *
      * @return object
      */
     public static function getInstance(array $config = [])
@@ -142,7 +144,7 @@ class Meta
         $title = $this->title;
 
         if ($title && $this->config['title_limit']) {
-            $title = ' - '.$title;
+            $title = $this->config['separator'].$title;
             $limit = $this->config['title_limit'] - mb_strlen($title);
         } else {
             $limit = 'title';
