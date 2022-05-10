@@ -29,7 +29,8 @@ class Meta
         'title_limit' => 70,
         'description_limit' => 200,
         'image_limit' => 5,
-        'tags' => ['Tag', 'MetaName', 'MetaProperty', 'MetaProduct', 'TwitterCard']
+        'tags' => ['Tag', 'MetaName', 'MetaProperty', 'MetaProduct', 'TwitterCard'],
+        'separator' => ' - '
     ];
 
     /**
@@ -39,6 +40,7 @@ class Meta
 
     /**
      * @param  array $config = []
+     *
      * @return object
      */
     public static function getInstance(array $config = [])
@@ -109,7 +111,7 @@ class Meta
     public function set($key, $value)
     {
         if (!is_array($value)) {
-            $value = $this->plain($value);   
+            $value = $this->plain($value);
         }
 
         $method = 'set'.$key;
@@ -117,6 +119,7 @@ class Meta
         if (method_exists($this, $method)) {
             return $this->$method($value);
         }
+
         return $this->metas[$key] = self::cut($value, $key);
     }
 
@@ -146,7 +149,7 @@ class Meta
         $title = $this->title;
 
         if ($title && $this->config['title_limit']) {
-            $title = ' - '.$title;
+            $title = $this->config['separator'].$title;
             $limit = $this->config['title_limit'] - mb_strlen($title);
         } else {
             $limit = 'title';
@@ -229,9 +232,8 @@ class Meta
 
         return array_slice(array_merge($this->metas['image'], $default), 0, $this->config['image_limit']);
     }
+
     /**
-     * @param  string|array $default
-     *
      * @return array
      */
     public function getProduct()
