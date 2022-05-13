@@ -263,7 +263,7 @@ class Meta
             $class = __NAMESPACE__.'\\Tags\\'.$tag;
 
             foreach (array_unique($values) as $value) {
-                $html .= $class::tag($key, $value);
+                $html .= "\n".$class::tag($key, $value);
             }
         }
 
@@ -280,7 +280,7 @@ class Meta
         $html = '';
 
         foreach (($keys ?: array_keys($this->metas)) as $key) {
-            $html .= $this->tag($key);
+            $html .= "\n".$this->tag($key);
         }
 
         return $html;
