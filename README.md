@@ -1,9 +1,9 @@
-# HTML Meta Tags management package available for Laravel 5/6/7/8
+# HTML Meta Tags management package available for Laravel >= 5 (Including 10)
 
 [![Build Status](https://travis-ci.org/eusonlito/laravel-Meta.svg?branch=master)](https://travis-ci.org/eusonlito/laravel-Meta)
-[![Latest Stable Version](https://poser.pugx.org/laravel/meta/v/stable.png)](https://packagist.org/packages/laravel/meta)
-[![Total Downloads](https://poser.pugx.org/laravel/meta/downloads.png)](https://packagist.org/packages/laravel/meta)
-[![License](https://poser.pugx.org/laravel/meta/license.png)](https://packagist.org/packages/laravel/meta)
+[![Latest Stable Version](https://poser.pugx.org/eusonlito/laravel-meta/v/stable.png)](https://packagist.org/packages/eusonlito/laravel-meta)
+[![Total Downloads](https://poser.pugx.org/eusonlito/laravel-meta/downloads.png)](https://packagist.org/packages/eusonlito/laravel-meta)
+[![License](https://poser.pugx.org/eusonlito/laravel-meta/license.png)](https://packagist.org/packages/eusonlito/laravel-meta)
 
 With this package you can manage header Meta Tags from Laravel controllers.
 
