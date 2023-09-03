@@ -1,7 +1,8 @@
 <?php
 use Eusonlito\LaravelMeta\Meta;
+use PHPUnit\Framework\TestCase;
 
-class Tests extends PHPUnit\Framework\TestCase
+class Tests extends TestCase
 {
     protected static $title;
     protected $Meta;
