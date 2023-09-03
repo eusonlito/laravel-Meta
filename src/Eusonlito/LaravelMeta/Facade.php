@@ -12,6 +12,6 @@ class Facade extends LFacade
      */
     protected static function getFacadeAccessor()
     {
-        return 'meta';
+        return Meta::class;
     }
 }

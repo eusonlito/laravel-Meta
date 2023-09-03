@@ -6,7 +6,7 @@ class Tests extends PHPUnit\Framework\TestCase
     protected static $title;
     protected $Meta;
 
-    public function setUp(): void
+    public function setUp()
     {
         self::$title = self::text(20);
 
